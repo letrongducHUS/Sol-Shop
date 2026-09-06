@@ -92,7 +92,7 @@
         <label>Email:</label><br/>
         <input type="email" name="email" required/><br/><br/>
 
-        <input type="submit" value="Đăng ký"/><br/><br/>
+        <input type="submit" value="đăng ký"/><br/><br/>
 
         <c:if test="${not empty error}">
             <div style="color:red;">${error}</div>

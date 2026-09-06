@@ -1,16 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="form"
+    uri="http://www.springframework.org/tags/form"%>
+
+<%@ taglib prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html>
+
 <head>
+
     <title>Đăng nhập</title>
+
     <style>
+
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #74ABE2, #5563DE);
             height: 100vh;
             margin: 0;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,8 +39,9 @@
             margin-bottom: 15px;
             text-align: left;
         }
+
         h2 {
-        	text-align: center;
+            text-align: center;
         }
 
         label {
@@ -38,7 +49,7 @@
             color: #555;
         }
 
-        input[type="text"], 
+        input[type="text"],
         input[type="password"] {
             width: 100%;
             padding: 10px;
@@ -76,55 +87,93 @@
 
         .error-message {
             color: red;
-            margin-top: 10px;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: left;
         }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
     </style>
+
 </head>
+
+
 <body>
-	<form:form action="${pageContext.request.contextPath}/login"
-                 method="post"
-                 modelAttribute="user">
 
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <form:form
+        action="${pageContext.request.contextPath}/login"
+        method="post"
+        modelAttribute="user">
 
-          <h2>Đăng nhập</h2>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}" />
 
-          <p>
-              Tên đăng nhập:
-              <form:input path="username" />
-          </p>
+        <h2>Đăng nhập</h2>
 
-          <p>
-              Mật khẩu:
-              <form:password path="password" />
-          </p>
 
-          <p>
-              <input type="submit" value="Đăng nhập" />
-          </p>
+        <p>
+            Tên đăng nhập:
+            <br>
 
-          <p>
-              Chưa có tài khoản?
-              <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
-          </p>
-      </form:form>
+            <form:input path="username" />
+        </p>
 
-      <c:if test="${param.error != null}">
-          <div class="error-message">
-              Sai tên đăng nhập, mật khẩu hoặc tài khoản đã bị vô hiệu.
-          </div>
-      </c:if>
 
-      <c:if test="${param.logout != null}">
-          <div style="color: green; margin-top: 10px;">
-              Bạn đã đăng xuất.
-          </div>
-      </c:if>
+        <p>
+            Mật khẩu:
+            <br>
 
-      <c:if test="${param.registered != null}">
-          <div style="color: green; margin-top: 10px;">
-              Đăng ký thành công. Hãy đăng nhập.
-          </div>
-      </c:if>
+            <form:password path="password" />
+
+            <%-- Error hi?n th? ngay du?i � m?t kh?u --%>
+            <c:if test="${param.error != null}">
+                <div class="error-message">
+                    Sai tên đăng nhập, mật khẩu hoặc tài khoản đã bị vô hiệu.
+                </div>
+            </c:if>
+
+        </p>
+
+
+        <p>
+            <input type="submit" value="Đăng nhập" />
+        </p>
+
+
+        <p>
+            Chưa có tài khoản?
+            <a href="${pageContext.request.contextPath}/register">
+                Đăng ký
+            </a>
+        </p>
+
+    </form:form>
+
+
+    <%-- �ang xu?t th�nh c�ng --%>
+    <c:if test="${param.logout != null}">
+        <div class="success-message">
+            Bạn đã đăng xuất.
+        </div>
+    </c:if>
+
+
+    <%-- �ang k� th�nh c�ng --%>
+    <c:if test="${param.registered != null}">
+        <div class="success-message">
+            Đăng ký thành công. Hãy đăng nhập.
+        </div>
+    </c:if>
+
+
 </body>
+
 </html>

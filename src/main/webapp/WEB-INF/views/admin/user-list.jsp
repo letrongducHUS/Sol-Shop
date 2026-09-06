@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Quáº£n lÃ½ ngÆ°á»i dÃ¹ng</title>
+    <title>Quản lý người dùng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         table { width: 80%; margin: auto; border-collapse: collapse; }
@@ -28,35 +28,35 @@
 	        </button>
 	        <div class="collapse navbar-collapse" id="navbarNav">
 	            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-	                <li class="nav-item"><a class="nav-link active" href="${pageContext.request.contextPath}/home">Trang chá»§</a></li>
-	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/userOrders/list">ÄÆ¡n hÃ ng cá»§a tÃ´i</a></li>
+	                <li class="nav-item"><a class="nav-link active" href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/userOrders/list">Đơn hàng của tôi</a></li>
 	                <c:if test="${loggedInUser.role == 'ADMIN'}">
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products">Sáº£n pháº©m</a></li>	       
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Quáº£n trá»‹</a></li>
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/orders/list">ÄÆ¡n hÃ ng</a></li>
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products">Sản phẩm</a></li>	       
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Quản trị</a></li>
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/orders/list">Đơn hàng</a></li>
 	                </c:if>
-	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact">LiÃªn há»‡</a></li>
+	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
 	            </ul>
 	            <div class="d-flex">
 	                <a href="${pageContext.request.contextPath}/cart/view" class="btn btn-outline-light me-2">
-	                    Giá» hÃ ng
+	                    Giỏ hàng
 	                </a>
 	               <form action="${pageContext.request.contextPath}/logout" method="post" style="display:inline;">
-					    <button type="submit" class="btn btn-danger">ÄÄƒng xuáº¥t</button>
+					    <button type="submit" class="btn btn-danger">Đăng xuất</button>
 				   </form>
 	            </div>
 	        </div>
 	    </div>
 	</nav>
 
-<h2 style="text-align:center;">Danh sÃ¡ch ngÆ°á»i dÃ¹ng</h2>
+<h2 style="text-align:center;">Danh sách người dùng</h2>
 
 <div style="width: 80%; margin:auto; text-align:right;">
-    <a href="${pageContext.request.contextPath}/admin/users/add" class="btn btn-add">ThÃªm má»›i</a>
+    <a href="${pageContext.request.contextPath}/admin/users/add" class="btn btn-add">Thêm mới</a>
 </div>
 
 <c:if test="${empty users}">
-    <p style="text-align:center;">ChÆ°a cÃ³ ngÆ°á»i dÃ¹ng nÃ o.</p>
+    <p style="text-align:center;">Chưa có người dùng nào.</p>
 </c:if>
 
 <c:if test="${not empty users}">
@@ -65,8 +65,8 @@
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Tráº¡ng thÃ¡i</th>
-            <th>HÃ nh Ä‘á»™ng</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr>
@@ -75,12 +75,12 @@
                 <td>${user.role}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${user.status}">Hoáº¡t Ä‘á»™ng</c:when>
-                        <c:otherwise>VÃ´ hiá»‡u</c:otherwise>
+                        <c:when test="${user.status}">Hoạt động</c:when>
+                        <c:otherwise>Vô hiệu</c:otherwise>
                     </c:choose>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/admin/users/edit/${user.id}" class="btn btn-edit">Sá»­a</a>
+                    <a href="${pageContext.request.contextPath}/admin/users/edit/${user.id}" class="btn btn-edit">Sửa</a>
                     <form action="${pageContext.request.contextPath}/admin/users/delete/${user.id}" method="post" style="display:inline;" onsubmit="return confirm('Vô hiệu hóa người dùng này?');">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="btn btn-delete">Xóa</button>
