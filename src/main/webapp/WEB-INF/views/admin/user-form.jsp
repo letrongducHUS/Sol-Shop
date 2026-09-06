@@ -23,13 +23,14 @@
 </h2>
 
 <form action="${pageContext.request.contextPath}/admin/users/save" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" name="id" value="${user.id}" />
 
     <label>Username:</label>
     <input type="text" name="username" value="${user.username}" required />
 
     <label>Password:</label>
-    <input type="password" name="password" value="${user.password}" required />
+    <input type="password" name="password" value="" ${user.id == null ? 'required' : ''} />
 
     <label>Email:</label>
     <input type="email" name="email" value="${user.email}" required />

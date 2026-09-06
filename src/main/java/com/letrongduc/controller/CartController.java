@@ -52,8 +52,14 @@ public class CartController {
         if (user == null) {
             return "redirect:/login";
         }
+        if (quantity <= 0) {
+            return "redirect:/products";
+        }
         
         Products product = productService.getProductById(productId);
+        if (product == null) {
+            return "redirect:/products";
+        }
 
         Cart_Items item = new Cart_Items();
         item.setUser_id(user.getId());
@@ -81,6 +87,9 @@ public class CartController {
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     public String clearCart(HttpSession session) {
         Users user = (Users) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/login";
+        }
         cartService.clearCart(user.getId());
         return "redirect:/cart/view";
     }

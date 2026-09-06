@@ -75,6 +75,7 @@
     <h2>Thông tin đặt hàng</h2>
 
     <form action="${pageContext.request.contextPath}/cart/checkout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     
         <label>Họ và tên:</label>
         <input type="text" name="name" required>

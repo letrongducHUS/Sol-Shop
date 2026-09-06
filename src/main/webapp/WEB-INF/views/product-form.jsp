@@ -75,6 +75,7 @@
 <div class="form-container">
 	<h2>Thông tin sản phẩm</h2>
 	<form action="${pageContext.request.contextPath}/products/save" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    <input type="hidden" name="id" value="${product.id}" />
 	    <p>
 	        Tên: <input type="text" name="name" value="${product.name}" required/>

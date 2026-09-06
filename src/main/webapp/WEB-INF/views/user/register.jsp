@@ -100,5 +100,6 @@
 
         <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập</a></p>
     </form>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </body>
 </html>

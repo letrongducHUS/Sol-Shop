@@ -69,7 +69,7 @@ public class ProductController {
         return "product-list"; 
     }
     
-    @RequestMapping(value = "/deleteByCategory", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByCategory", method = RequestMethod.POST)
     public String deleteProductByCategory(
             @RequestParam("id") int id,
             @RequestParam(value = "category", required = false) String category) {
@@ -82,7 +82,7 @@ public class ProductController {
         }
     }
     
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteProduct(@RequestParam("id") int id) {
         productService.delete(id);
         return "redirect:/products";

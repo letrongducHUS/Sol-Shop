@@ -81,20 +81,50 @@
     </style>
 </head>
 <body>
-    	<form:form method="post" modelAttribute="user">
-    		<h2>Đăng nhập</h2>
-	        <p>Tên đăng nhập: <form:input path="username" /></p>
-	        <p>Mật khẩu: <form:password path="password" /></p>
-	        <p><input type="submit" value="Đăng nhập" /></p>
-	        <p>Chưa có tài khoản? 
-	            <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
-	        </p>
-    	</form:form>
+	<form:form action="${pageContext.request.contextPath}/login"
+                 method="post"
+                 modelAttribute="user">
 
-    <c:if test="${not empty error}">
-        <script>
-	        alert("${error}");
-	    </script>
-    </c:if>
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+          <h2>Đăng nhập</h2>
+
+          <p>
+              Tên đăng nhập:
+              <form:input path="username" />
+          </p>
+
+          <p>
+              Mật khẩu:
+              <form:password path="password" />
+          </p>
+
+          <p>
+              <input type="submit" value="Đăng nhập" />
+          </p>
+
+          <p>
+              Chưa có tài khoản?
+              <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
+          </p>
+      </form:form>
+
+      <c:if test="${param.error != null}">
+          <div class="error-message">
+              Sai tên đăng nhập, mật khẩu hoặc tài khoản đã bị vô hiệu.
+          </div>
+      </c:if>
+
+      <c:if test="${param.logout != null}">
+          <div style="color: green; margin-top: 10px;">
+              Bạn đã đăng xuất.
+          </div>
+      </c:if>
+
+      <c:if test="${param.registered != null}">
+          <div style="color: green; margin-top: 10px;">
+              Đăng ký thành công. Hãy đăng nhập.
+          </div>
+      </c:if>
 </body>
 </html>

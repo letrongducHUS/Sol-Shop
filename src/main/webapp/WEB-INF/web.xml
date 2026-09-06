@@ -5,6 +5,18 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
+    <filter>
+          <filter-name>springSecurityFilterChain</filter-name>
+          <filter-class>
+              org.springframework.web.filter.DelegatingFilterProxy
+          </filter-class>
+      </filter>
+
+      <filter-mapping>
+          <filter-name>springSecurityFilterChain</filter-name>
+          <url-pattern>/*</url-pattern>
+      </filter-mapping>
+    
     <!-- DispatcherServlet dùng luôn applicationContext.xml -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>

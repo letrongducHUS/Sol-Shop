@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>Chi tiết đơn hàng #${order.id}</title>
+    <title>Chi tiáº¿t Ä‘Æ¡n hÃ ng #${order.id}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         table { width: 80%; border-collapse: collapse; margin: 20px auto; }
@@ -22,45 +22,45 @@
 	        </button>
 	        <div class="collapse navbar-collapse" id="navbarNav">
 	            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-	                <li class="nav-item"><a class="nav-link active" href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+	                <li class="nav-item"><a class="nav-link active" href="${pageContext.request.contextPath}/home">Trang chá»§</a></li>
 	                <c:if test="${loggedInUser.role == 'ADMIN'}">
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products">Sản phẩm</a></li>	       
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Quản trị</a></li>
-	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Đơn hàng</a></li>
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products">Sáº£n pháº©m</a></li>	       
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Quáº£n trá»‹</a></li>
+	                	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">ÄÆ¡n hÃ ng</a></li>
 	                </c:if>
-	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+	                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact">LiÃªn há»‡</a></li>
 	            </ul>
 	            <div class="d-flex">
 	                <a href="${pageContext.request.contextPath}/cart/view" class="btn btn-outline-light me-2" style="margin: auto; margin-top: 1px">
-	                    Giỏ hàng
+	                    Giá» hÃ ng
 	                </a>
-	               <form action="${pageContext.request.contextPath}/login/logout" method="post" style="display:inline;">
-					    <button type="submit" class="btn btn-danger">Đăng xuất</button>
+	               <form action="${pageContext.request.contextPath}/logout" method="post" style="display:inline;">
+					    <button type="submit" class="btn btn-danger">ÄÄƒng xuáº¥t</button>
 				   </form>
 	            </div>
 	        </div>
 	    </div>
 	</nav>
-<h2 style="text-align:center;">Chi tiết đơn hàng #${order.id}</h2>
+<h2 style="text-align:center;">Chi tiáº¿t Ä‘Æ¡n hÃ ng #${order.id}</h2>
 
-<p>Ngày đặt: <fmt:formatDate value="${order.order_date}" pattern="dd/MM/yyyy HH:mm"/></p>
-<p>Trạng thái: ${order.status}</p>
-<p>Tổng tiền: 
-    <fmt:formatNumber value="${order.total_amount}" type="currency" maxFractionDigits="0" currencySymbol="₫"/>
+<p>NgÃ y Ä‘áº·t: <fmt:formatDate value="${order.order_date}" pattern="dd/MM/yyyy HH:mm"/></p>
+<p>Tráº¡ng thÃ¡i: ${order.status}</p>
+<p>Tá»•ng tiá»n: 
+    <fmt:formatNumber value="${order.total_amount}" type="currency" maxFractionDigits="0" currencySymbol="â‚«"/>
 </p>
 
 
-<h3>Sản phẩm trong đơn hàng</h3>
+<h3>Sáº£n pháº©m trong Ä‘Æ¡n hÃ ng</h3>
 <c:if test="${empty items}">
-    <p>Không có sản phẩm nào.</p>
+    <p>KhÃ´ng cÃ³ sáº£n pháº©m nÃ o.</p>
 </c:if>
 
 <c:if test="${not empty items}">
     <table>
         <thead>
         <tr>
-            <th>Tên sản phẩm</th>
-            <th>Số lượng</th>            
+            <th>TÃªn sáº£n pháº©m</th>
+            <th>Sá»‘ lÆ°á»£ng</th>            
         </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@
     </table>
 </c:if>
 
-<p style="text-align:center;"><a href="${pageContext.request.contextPath}/userOrders/list">Quay lại danh sách đơn hàng</a></p>
+<p style="text-align:center;"><a href="${pageContext.request.contextPath}/userOrders/list">Quay láº¡i danh sÃ¡ch Ä‘Æ¡n hÃ ng</a></p>
 
 </body>
 </html>

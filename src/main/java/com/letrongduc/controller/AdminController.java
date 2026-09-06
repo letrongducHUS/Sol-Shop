@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.letrongduc.model.Users;
 import com.letrongduc.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 @RequestMapping("/admin")
@@ -16,6 +17,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Hiển thị danh sách người dùng
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -36,8 +40,15 @@ public class AdminController {
     @RequestMapping(value = "/users/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") Users user) {
         if (user.getId() == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.insertUser(user);
         } else {
+            Users existing = userService.getUserById(user.getId());
+            if (existing != null && (user.getPassword() == null || user.getPassword().isBlank())) {
+                user.setPassword(existing.getPassword());
+            } else {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             userService.updateUser(user);
         }
         return "redirect:/admin/users";
@@ -52,7 +63,7 @@ public class AdminController {
     }
 
     // Vô hiệu hóa/xóa user
-    @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
     public String deleteUser(@PathVariable("id") int id) {
         Users user = userService.getUserById(id);
         if (user != null) {

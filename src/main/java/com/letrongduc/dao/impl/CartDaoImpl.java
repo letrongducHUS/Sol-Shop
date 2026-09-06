@@ -61,7 +61,11 @@ public class CartDaoImpl implements CartDAO {
     @Override
     public void removeCartItem(int id, int userId) {
     	Session session = sessionFactory.getCurrentSession();
-        Cart_Items item = session.get(Cart_Items.class, id);
+        Cart_Items item = session.createQuery(
+                "FROM Cart_Items WHERE id = :id AND user_id = :userId", Cart_Items.class)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
+                .uniqueResult();
         if (item != null) {
             session.delete(item);
         }
