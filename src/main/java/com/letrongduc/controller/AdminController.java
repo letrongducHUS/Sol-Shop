@@ -65,11 +65,7 @@ public class AdminController {
     // Vô hiệu hóa/xóa user
     @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
     public String deleteUser(@PathVariable("id") int id) {
-        Users user = userService.getUserById(id);
-        if (user != null) {
-            user.setStatus(false); // vô hiệu hóa thay vì xóa thật
-            userService.updateUser(user);
-        }
+        userService.deleteUser(id);
         return "redirect:/admin/users";
     }
 }

@@ -142,6 +142,18 @@ public class UserDaoImpl implements UserDAO {
             e.printStackTrace();
         }
 	}
+
+	@Override
+	public void deleteUser(int id) {
+		String sql = "DELETE FROM users WHERE id = ?";
+		try (Connection conn = dataSource.getConnection();
+		     PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private Users mapResultSetToUser(ResultSet rs) throws SQLException {
         Users user = new Users();

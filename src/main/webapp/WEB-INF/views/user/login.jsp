@@ -94,9 +94,12 @@
         }
 
         .success-message {
-            color: green;
-            font-size: 14px;
-            margin-top: 10px;
+            color: #166534;
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
             text-align: center;
         }
 
@@ -117,6 +120,14 @@
                value="${_csrf.token}" />
 
         <h2>Đăng nhập</h2>
+
+        <c:if test="${param.logout != null}">
+            <div class="success-message">Bạn đã đăng xuất.</div>
+        </c:if>
+
+        <c:if test="${param.registered != null}">
+            <div class="success-message">Đăng ký thành công. Hãy đăng nhập.</div>
+        </c:if>
 
 
         <p>
@@ -158,20 +169,8 @@
     </form:form>
 
 
-    <%-- �ang xu?t th�nh c�ng --%>
-    <c:if test="${param.logout != null}">
-        <div class="success-message">
-            Bạn đã đăng xuất.
-        </div>
-    </c:if>
 
 
-    <%-- �ang k� th�nh c�ng --%>
-    <c:if test="${param.registered != null}">
-        <div class="success-message">
-            Đăng ký thành công. Hãy đăng nhập.
-        </div>
-    </c:if>
 
 
 </body>

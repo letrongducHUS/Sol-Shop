@@ -81,7 +81,7 @@
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/admin/users/edit/${user.id}" class="btn btn-edit">Sửa</a>
-                    <form action="${pageContext.request.contextPath}/admin/users/delete/${user.id}" method="post" style="display:inline;" onsubmit="return confirm('Vô hiệu hóa người dùng này?');">
+                    <form action="${pageContext.request.contextPath}/admin/users/delete/${user.id}" method="post" style="display:inline;" onsubmit="return confirm('Xóa người dùng này?');">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="btn btn-delete">Xóa</button>
                     </form>

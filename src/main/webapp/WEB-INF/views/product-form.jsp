@@ -115,7 +115,8 @@
 	        </select>
 	    </p>
 	    <p>
-	        Hình ảnh: <input type="file" name="imageFile" accept="image/*"/>
+	        Hình ảnh: <input type="file" name="imageFile" accept="image/*" ${empty product.id ? 'required' : ''}/>
+	        <small>Chỉ chọn tệp ảnh. Khi sửa, để trống mục này để giữ ảnh hiện tại.</small>
 	    </p>
 	    <c:if test="${not empty product.image}">
 	        <p>Ảnh hiện tại:</p>

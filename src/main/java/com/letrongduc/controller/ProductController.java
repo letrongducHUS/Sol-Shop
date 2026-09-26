@@ -3,6 +3,8 @@ package com.letrongduc.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,20 +34,35 @@ public class ProductController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveProduct(@ModelAttribute("product") Products product,@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-    	
-    	String uploadDir = "E:/uploads/";
+        Products existingProduct = product.getId() == null ? null : productService.getProductById(product.getId());
 
-        File dir = new File(uploadDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String contentType = imageFile.getContentType();
+            if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith("image/")) {
+                throw new IllegalArgumentException("Tệp tải lên phải là hình ảnh.");
+            }
+
+            String uploadDir = "/app/uploads/";
+            File dir = new File(uploadDir);
+            if (!dir.exists() && !dir.mkdirs()) {
+                throw new IOException("Không thể tạo thư mục lưu ảnh.");
+            }
+
+            String originalName = imageFile.getOriginalFilename();
+            String extension = "";
+            if (originalName != null) {
+                int extensionIndex = originalName.lastIndexOf('.');
+                if (extensionIndex >= 0) {
+                    extension = originalName.substring(extensionIndex);
+                }
+            }
+
+            String fileName = UUID.randomUUID() + extension;
+            imageFile.transferTo(new File(dir, fileName));
+            product.setImage(fileName);
+        } else if (existingProduct != null) {
+            product.setImage(existingProduct.getImage());
         }
-
-        String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
-        File destination = new File(dir, fileName);
-      
-        imageFile.transferTo(destination);
-
-        product.setImage(fileName);
 
         productService.saveProduct(product);
         return "redirect:/products";

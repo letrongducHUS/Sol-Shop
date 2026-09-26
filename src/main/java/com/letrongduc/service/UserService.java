@@ -14,6 +14,8 @@ public interface UserService {
 
     void updateUser(Users user);
 
+    void deleteUser(int id);
+
     boolean insertUser(Users user);
     
     boolean isAdmin(String username);
