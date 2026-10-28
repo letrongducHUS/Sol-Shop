@@ -35,6 +35,15 @@ public class SecurityConfig {
         .authenticationProvider(authenticationProvider())
 
         .authorizeHttpRequests(auth -> auth
+            // JSP view rendering is an internal forward; allow it to reach /WEB-INF/views/**.
+            .dispatcherTypeMatchers(
+                jakarta.servlet.DispatcherType.FORWARD,
+                jakarta.servlet.DispatcherType.ERROR
+            ).permitAll()
+
+            // Also allow the JSP target in deployments where a FORWARD is exposed as a path match.
+            .requestMatchers("/WEB-INF/**").permitAll()
+
             // Chưa đăng nhập vẫn được truy cập
             .requestMatchers(
                 "/", "/login", "/register",
