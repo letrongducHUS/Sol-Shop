@@ -2,9 +2,13 @@ package com.letrongduc.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +26,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+
+	@Value("${UPLOAD_DIR:./uploads}")
+	private String uploadDir;
 	
 	@RequestMapping("/form")
     public String showForm(@RequestParam(value = "id", required = false) Integer id, Model model) { 				
@@ -32,20 +39,27 @@ public class ProductController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveProduct(@ModelAttribute("product") Products product,@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-    	
-    	String uploadDir = "E:/uploads/";
+		if (imageFile != null && !imageFile.isEmpty()) {
+			Path dir = Paths.get(uploadDir).toAbsolutePath().normalize();
+			File directory = dir.toFile();
+			if (!directory.exists() && !directory.mkdirs()) {
+				throw new IOException("Could not create upload directory: " + dir);
+			}
 
-        File dir = new File(uploadDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
-        File destination = new File(dir, fileName);
-      
-        imageFile.transferTo(destination);
-
-        product.setImage(fileName);
+			String originalName = imageFile.getOriginalFilename();
+			if (originalName == null || originalName.trim().isEmpty()) {
+				originalName = "image";
+			} else {
+				originalName = Paths.get(originalName).getFileName().toString();
+			}
+			String fileName = UUID.randomUUID() + "_" + originalName;
+			Path destination = dir.resolve(fileName).normalize();
+			if (!destination.startsWith(dir)) {
+				throw new IOException("Invalid uploaded filename");
+			}
+			imageFile.transferTo(destination);
+			product.setImage(fileName);
+		}
 
         productService.saveProduct(product);
         return "redirect:/products";
